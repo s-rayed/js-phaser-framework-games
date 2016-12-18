@@ -107,7 +107,7 @@ var GameState = {
 
   },
   animateAnimal: function(sprite, event) {
-    console.log('animate animal');
+    console.log('animate the animal');
   },
   switchAnimal: function(sprite, event){
     var newAnimal, endX;
