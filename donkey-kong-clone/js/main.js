@@ -109,6 +109,12 @@ var GameState = {
 
     this.createOnscreenControls();
 
+    // create barrels (pool of objects)
+    this.barrels = this.add.group();
+    this.barrels.enableBody = true;
+
+    this.barrelCreator = this.game.time.events.loop(Phaser.Timer.SECOND * this.levelData.barrelFrequency, this.createBarrel, this);
+
 
   },
 
@@ -226,6 +232,20 @@ var GameState = {
     this.rightArrow.events.onInputOut.add(function() {
       this.player.customParams.isMovingRight = false;
     }, this);
+  },
+
+  createBarrel: function() {
+    // Phaser keeps track of dead and alive sprites. we can reuse the dead ones. This is recycling dead barrels so
+    // there isnt a memory leak, where elements are just taking up memory over and over causing device crash eventually.
+    // We recycle because deleting objects can cause the GC to slow down your game. A pool of objects is used (it is a group where you reuse the dead objects instead of creating new ones)
+    var barrel = this.barrels.getFirstExist(false); // this gives the first dead sprite if any
+
+    // if no dead sprites
+    if (!barrel) {
+      barrel = this.barrels.create(0, 0, 'barrel');
+    }
+
+    barrel.reset(this.levelData.goal.x, this.levelData.goal.y);
   },
 
   killPlayer: function(player, fire) {
