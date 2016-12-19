@@ -65,6 +65,20 @@ var GameState = {
     this.platforms.setAll('body.immovable', true);
     this.platforms.setAll('body.allowGravity', false); // explanations for these 2 are below in the comments
 
+    // fires
+    this.fires = this.add.group();
+    this.fires.enableBody = true; // enable physics -- enableBody is for GROUPS -- just enable such as when creating
+    // gorilla we use jjust enable
+
+    var fire;
+    this.levelData.fireData.forEach(function(element) {
+      fire = this.fires.create(element.x, element.y, 'fire');
+      fire.animations.add('fire', [0, 1], 4, true);
+      fire.play('fire');
+    }, this);
+
+    this.fires.setAll('body.allowGravity', false);
+
 /*
     this.platform = this.add.sprite(0, 300, 'platform');
     // applying physics to platform
@@ -74,6 +88,11 @@ var GameState = {
     // this is so that platform doesnt move down when the player steps/jumps on it
     this.platform.body.immovable = true;
 */
+
+    // create goal (gorilla)
+    this.goal = this.add.sprite(this.levelData.goal.x, this.levelData.goal.y, 'goal');
+    this.game.physics.arcade.enable(this.goal);
+    this.goal.body.allowGravity = false;
 
 
     // create player
@@ -101,6 +120,12 @@ var GameState = {
     // overlap is when you want to check when 2 elements are in the same space but those 2 dont interfere with eachother
     // in both cases you can pass a callback function such as this.landed below.
     this.game.physics.arcade.collide(this.player, this.platforms/*, this.landed */);
+
+    // fire collision
+    this.game.physics.arcade.overlap(this.player, this.fires, this.killPlayer);
+
+    // gorilla collision
+    this.game.physics.arcade.overlap(this.player, this.goal, this.win);
 
 
     // for keyboard listeners
@@ -201,6 +226,16 @@ var GameState = {
     this.rightArrow.events.onInputOut.add(function() {
       this.player.customParams.isMovingRight = false;
     }, this);
+  },
+
+  killPlayer: function(player, fire) {
+    console.log('Ouch!');
+    game.state.start('GameState');
+  },
+
+  win: function(player, goal) {
+    console.log("YOU WIN");
+    game.state.start('GameState');
   }
 
   // landed: function(player, ground) {
