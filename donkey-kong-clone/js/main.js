@@ -104,6 +104,9 @@ var GameState = {
     
     this.player.customParams = {};
 
+    // player game world bounds collision -- doesnt let player go out of world bounds
+    this.player.body.collideWorldBounds = true;
+
     // this follows the player wherever he goes
     this.game.camera.follow(this.player);
 
@@ -113,6 +116,7 @@ var GameState = {
     this.barrels = this.add.group();
     this.barrels.enableBody = true;
 
+    this.createBarrel();
     this.barrelCreator = this.game.time.events.loop(Phaser.Timer.SECOND * this.levelData.barrelFrequency, this.createBarrel, this);
 
 
@@ -127,11 +131,25 @@ var GameState = {
     // in both cases you can pass a callback function such as this.landed below.
     this.game.physics.arcade.collide(this.player, this.platforms/*, this.landed */);
 
-    // fire collision
+    // player - fire collision
     this.game.physics.arcade.overlap(this.player, this.fires, this.killPlayer);
 
-    // gorilla collision
+    // player - gorilla collision
     this.game.physics.arcade.overlap(this.player, this.goal, this.win);
+
+    // player - barrel collision
+    this.game.physics.arcade.overlap(this.player, this.barrels, this.killPlayer);
+
+    // barrel collision with platforms and ground
+    this.game.physics.arcade.collide(this.barrels, this.ground);
+    this.game.physics.arcade.collide(this.barrels, this.platforms);
+
+    // kill barrel when it hits the end -- reuse it later -- this doesnt delete but kills element.
+    this.barrels.forEach(function(element) {
+      if (element.position.x < 10 && element.position.y > 600){
+        element.kill();
+      }
+    }, this)
 
 
     // for keyboard listeners
@@ -238,14 +256,20 @@ var GameState = {
     // Phaser keeps track of dead and alive sprites. we can reuse the dead ones. This is recycling dead barrels so
     // there isnt a memory leak, where elements are just taking up memory over and over causing device crash eventually.
     // We recycle because deleting objects can cause the GC to slow down your game. A pool of objects is used (it is a group where you reuse the dead objects instead of creating new ones)
-    var barrel = this.barrels.getFirstExist(false); // this gives the first dead sprite if any
+    var barrel = this.barrels.getFirstExists(false); // this gives the first dead sprite if any
 
     // if no dead sprites
     if (!barrel) {
       barrel = this.barrels.create(0, 0, 'barrel');
     }
 
+    // barrel collision with world bounds 
+    barrel.body.collideWorldBounds = true;
+    // barrel must bounce on the x axis (so only on the walls, not when it hits the platform or ground)
+    barrel.body.bounce.set(1, 0);
+
     barrel.reset(this.levelData.goal.x, this.levelData.goal.y);
+    barrel.body.velocity.x = this.levelData.barrelSpeed;
   },
 
   killPlayer: function(player, fire) {
