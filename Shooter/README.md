@@ -10,6 +10,6 @@ Best way:
 The uncool way (Web only):
 
 - clone the repo
-- cd into folder
+- cd into repo/www
 - `python -m SimpleHTTPServer`
 - visit localhost:8000
