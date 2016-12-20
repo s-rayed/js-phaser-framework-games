@@ -10,6 +10,13 @@ Shooter.Enemy = function(game, x, y, key, health, enemyBullets) {
     this.animations.add('getHit', [0, 1, 2, 1, 0], 25, false);
     this.anchor.setTo(0.5);
     this.health = health;
+    
+    this.enemyBullets = enemyBullets;
+    // ------------------------------------(should timer destroy itself after 1 go round?)
+    this.enemyTimer = this.game.time.create(false);
+    this.enemyTimer.start();
+    
+    this.scheduleShooting();
 };
 
 Shooter.Enemy.prototype = Object.create(Phaser.Sprite.prototype);
@@ -47,4 +54,23 @@ Shooter.Enemy.prototype.damage = function(amount) {
         // ----------(all particles released at once (explosion)?, lifespan of particles in ms, frequency (5particles every 5 seconds for example), how many particles released)
         emitter.start(true, 500, null, 100);
     }
+};
+
+Shooter.Enemy.prototype.scheduleShooting = function() {
+    this.shoot();
+    
+    this.enemyTimer.add(Phaser.Timer.SECOND * 2, this.scheduleShooting, this);
+};
+
+Shooter.Enemy.prototype.shoot = function() {
+    var bullet = this.enemyBullets.getFirstExists(false);
+    
+    if(!bullet) {
+        bullet = new Shooter.EnemyBullet(this.game, this.x, this.bottom);
+        this.enemyBullets.add(bullet);
+    } else {
+        bullet.reset(this.x, this.y);
+    }
+    
+    bullet.body.velocity.y = 100;
 };
