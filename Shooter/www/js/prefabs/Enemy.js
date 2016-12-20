@@ -34,4 +34,17 @@ Shooter.Enemy.prototype.damage = function(amount) {
     Phaser.Sprite.prototype.damage.call(this, amount);
     
     this.play('getHit');
+    
+    // Particle explosion when enemy dies
+    if (this.health <= 0) {
+        // phaser method ------------------(x and y position, # of particles to appear)
+        var emitter = this.game.add.emitter(this.x, this.y, 100);
+        emitter.makeParticles('enemyParticle');
+        // ----------------------(x and y) particles go everywhere from -200 to 200
+        emitter.minParticleSpeed.setTo(-200, -200);
+        emitter.maxParticleSpeed.setTo(200, 200);
+        emitter.gravity = 0;
+        // ----------(all particles released at once (explosion)?, lifespan of particles in ms, frequency (5particles every 5 seconds for example), how many particles released)
+        emitter.start(true, 500, null, 100);
+    }
 };
