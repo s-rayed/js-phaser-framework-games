@@ -30,6 +30,9 @@ Shooter.GameState = {
         this.load.text('level1', 'assets/data/level1.json');
         this.load.text('level2', 'assets/data/level2.json');
         this.load.text('level3', 'assets/data/level3.json');
+        
+        // load music -- loading both mp3 for android/web and ogg for iOS. Phaser is smart enough to know which one to grab.
+        this.load.audio('orchestra', ['assets/audio/8bit-orchestra.mp3', 'assets/audio/8bit-orchestra.ogg']);
     },
     
     // Executed after everything is loaded
@@ -56,6 +59,28 @@ Shooter.GameState = {
         
         // Load level
         this.loadLevel();
+        this.orchestra = this.add.audio('orchestra');
+//      this.orchestra.play();
+        this.showLevelText();
+    },
+    
+    showLevelText: function() {
+        var style = {
+            font: 'bold 30pt Arial',
+            fill: '#fff',
+            align: 'center'
+        };
+
+        this.levelText = this.game.add.text(this.game.width / 2, this.game.height / 2, '', style);
+        this.levelText.anchor.setTo(0.5);
+        this.levelText.setText('Level: ' + this.currentLevel);
+        this.levelText.visible = true;
+        this.time.events.add(1000, this.removeLevelText, this);
+        
+    },
+    
+    removeLevelText: function() {
+        this.levelText.visible = false;
     },
     
     update: function() {
@@ -119,6 +144,8 @@ Shooter.GameState = {
     killPlayer: function() {
         this.player.kill();
         
+        this.orchestra.stop();
+        
         this.game.state.start('GameState');
     },
     
@@ -141,8 +168,10 @@ Shooter.GameState = {
         
         // end of level timer
         this.endOfLevelTimer = this.game.time.events.add(this.levelData.duration * 1000, function() {
-            console.log('level ended');
             
+            // level ends so stop the music
+            this.orchestra.stop();
+            // which level should it go to now
             if (this.currentLevel < this.numLevels) {
                 this.currentLevel++;    
             } else {
