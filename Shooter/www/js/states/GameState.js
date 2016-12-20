@@ -43,6 +43,9 @@ Shooter.GameState = {
         
         // Initiate Enemies
         this.initEnemies();
+        
+        // Load level
+        this.loadLevel();
     },
     
     update: function() {
@@ -118,9 +121,199 @@ Shooter.GameState = {
         }
         
         enemy.reset(x, y, health, key, scale, speedX, speedY);
+    },
+    
+    loadLevel: function() {
+        this.currentEnemyIndex = 0;
+        this.levelData = {
+          "duration": 35,
+          "enemies": 
+          [
+            {
+              "time": 1,
+              "x": 0.05,
+              "health": 6,
+              "speedX": 20, 
+              "speedY": 50,
+              "key": "greenEnemy",
+              "scale": 3
+            },
+            {
+              "time": 2,
+              "x": 0.1,
+              "health": 3,
+              "speedX": 50, 
+              "speedY": 50,
+              "key": "greenEnemy",
+              "scale": 1
+            },
+            {
+              "time": 3,
+              "x": 0.1,
+              "health": 3,
+              "speedX": 50, 
+              "speedY": 50,
+              "key": "greenEnemy",
+              "scale": 1
+            },
+            {
+              "time": 4,
+              "x": 0.1,
+              "health": 3,
+              "speedX": 50, 
+              "speedY": 50,
+              "key": "greenEnemy",
+              "scale": 1
+            },
+            {
+              "time": 5,
+              "x": 0.1,
+              "health": 3,
+              "speedX": 50, 
+              "speedY": 50,
+              "key": "greenEnemy",
+              "scale": 1
+            },
+            {
+              "time": 6,
+              "x": 0.1,
+              "health": 6,
+              "speedX": 50, 
+              "speedY": 50,
+              "key": "greenEnemy",
+              "scale": 3
+            },
+            {
+              "time": 7,
+              "x": 0.9,
+              "health": 3,
+              "speedX": -50, 
+              "speedY": 50,
+              "key": "redEnemy",
+              "scale": 2
+            },
+            {
+              "time": 8,
+              "x": 0.9,
+              "health": 3,
+              "speedX": -50, 
+              "speedY": 50,
+              "key": "redEnemy",
+              "scale": 1
+            },
+            {
+              "time": 9,
+              "x": 0.9,
+              "health": 3,
+              "speedX": -50, 
+              "speedY": 50,
+              "key": "redEnemy",
+              "scale": 1
+            },
+            {
+              "time": 10,
+              "x": 0.9,
+              "health": 3,
+              "speedX": -50, 
+              "speedY": 50,
+              "key": "redEnemy",
+              "scale": 1
+            },
+            {
+              "time": 11,
+              "x": 0.9,
+              "health": 3,
+              "speedX": -50, 
+              "speedY": 50,
+              "key": "redEnemy",
+              "scale": 1
+            },
+            {
+              "time": 12,
+              "x": 0.9,
+              "health": 6,
+              "speedX": -50, 
+              "speedY": 50,
+              "key": "redEnemy",
+              "scale": 3
+            },
+            {
+              "time": 13,
+              "x": 0.1,
+              "health": 3,
+              "speedX": 100, 
+              "speedY": 20,
+              "key": "greenEnemy",
+              "scale": 1
+            },
+            {
+              "time": 14,
+              "x": 0.1,
+              "health": 3,
+              "speedX": 100, 
+              "speedY": 20,
+              "key": "yellowEnemy",
+              "scale": 1
+            },
+            {
+              "time": 15,
+              "x": 0.1,
+              "health": 3,
+              "speedX": 100, 
+              "speedY": 20,
+              "key": "yellowEnemy",
+              "scale": 1
+            },
+            {
+              "time": 16,
+              "x": 0.1,
+              "health": 3,
+              "speedX": 100, 
+              "speedY": 20,
+              "key": "yellowEnemy",
+              "scale": 1
+            },
+            {
+              "time": 17,
+              "x": 0.1,
+              "health": 3,
+              "speedX": 100, 
+              "speedY": 20,
+              "key": "yellowEnemy",
+              "scale": 1
+            },
+            {
+              "time": 18,
+              "x": 0.1,
+              "health": 12,
+              "speedX": 120, 
+              "speedY": 50,
+              "key": "yellowEnemy",
+              "scale": 5
+            }
+          ]
+        };
+        
+        this.scheduleNextEnemy();
+    },
+    
+    scheduleNextEnemy: function() {
+        var nextEnemy = this.levelData.enemies[this.currentEnemyIndex];
+        
+        if (nextEnemy) {
+            //         - in ms so multiply by 1000 for seconds
+            var nextTime = 1000 * ( nextEnemy.time - (this.currentEnemyIndex == 0 ? 0 : this.levelData.enemies[this.currentEnemyIndex - 1].time));
+            this.nextEnemyTimer = this.game.time.events.add(nextTime, function() {
+                this.createEnemy(nextEnemy.x * this.game.world.width, -100, nextEnemy.health, nextEnemy.key, nextEnemy.scale, nextEnemy.speedX, nextEnemy.speedY);
+                
+                this.currentEnemyIndex++;
+                this.scheduleNextEnemy();
+            }, this)
+        }
     }
     
 };
+//
 
 
 
