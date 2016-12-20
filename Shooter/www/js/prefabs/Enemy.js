@@ -53,7 +53,21 @@ Shooter.Enemy.prototype.damage = function(amount) {
         emitter.gravity = 0;
         // ----------(all particles released at once (explosion)?, lifespan of particles in ms, frequency (5particles every 5 seconds for example), how many particles released)
         emitter.start(true, 500, null, 100);
+        
+        this.enemyTimer.pause();
     }
+};
+// custom reset function for easily changing enemies position, health, key, size and speed
+Shooter.Enemy.prototype.reset = function(x, y, health, key, scale, speedX, speedY) {
+    Phaser.Sprite.prototype.reset.call(this, x, y, health);
+    
+    this.loadTexture(key);
+    this.scale.setTo(scale);
+    this.body.velocity.x = speedX;
+    this.body.velocity.y = speedY;
+    
+    // when enemy dies it pauses the timer in the damage method above. here it recalls the killed enemy and resumes the time.
+    this.enemyTimer.resume();
 };
 
 Shooter.Enemy.prototype.scheduleShooting = function() {

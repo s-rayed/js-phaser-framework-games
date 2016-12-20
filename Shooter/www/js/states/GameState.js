@@ -79,6 +79,7 @@ Shooter.GameState = {
             this.playerBullets.add(bullet);
             
         } else {
+            // reset position back to the player
             bullet.reset(this.player.x, this.player.top);
         }
         
@@ -94,12 +95,6 @@ Shooter.GameState = {
         this.enemyBullets = this.add.group();
         this.enemyBullets.enableBody = true;
         
-        
-        var enemy = new Shooter.Enemy(this.game, 100, 100, 'greenEnemy', 10, this.enemyBullets);
-        this.enemies.add(enemy);
-        
-        enemy.body.velocity.x = 100;
-        enemy.body.velocity.y = 50;
     },
     
     damageEnemy: function(bullet, enemy) {
@@ -112,6 +107,17 @@ Shooter.GameState = {
         this.player.kill();
         
         this.game.state.start('GameState');
+    },
+    
+    createEnemy: function(x, y, health, key, scale, speedX, speedY) {
+        var enemy = this.enemies.getFirstExists(false);
+        
+        if (!enemy) {
+            enemy = new Shooter.Enemy(this.game, x, y, key, health, this.enemyBullets);
+            this.enemies.add(enemy);
+        }
+        
+        enemy.reset(x, y, health, key, scale, speedX, speedY);
     }
     
 };
