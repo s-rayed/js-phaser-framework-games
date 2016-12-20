@@ -3,12 +3,17 @@ var Shooter = Shooter || {};
 Shooter.GameState = {
     
     // Initiate game settings
-    init: function() {
+    init: function(currentLevel) {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.PLAYER_SPEED = 200;
         this.BULLET_SPEED = -1000;
+        
+        // level data
+        this.numLevels = 3;
+//        if level is entered, use that level, if not start at level 1
+        this.currentLevel = currentLevel ? currentLevel : 1;
     },
     
     // Load the game assets before the game starts
@@ -20,6 +25,11 @@ Shooter.GameState = {
         this.load.spritesheet('yellowEnemy', 'assets/images/yellow_enemy.png', 50, 46, 3, 1, 1);
         this.load.spritesheet('redEnemy', 'assets/images/red_enemy.png', 50, 46, 3, 1, 1);
         this.load.spritesheet('greenEnemy', 'assets/images/green_enemy.png', 50, 46, 3, 1, 1);
+        
+        // Load level data
+        this.load.text('level1', 'assets/data/level1.json');
+        this.load.text('level2', 'assets/data/level2.json');
+        this.load.text('level3', 'assets/data/level3.json');
     },
     
     // Executed after everything is loaded
@@ -125,174 +135,23 @@ Shooter.GameState = {
     
     loadLevel: function() {
         this.currentEnemyIndex = 0;
-        this.levelData = {
-          "duration": 35,
-          "enemies": 
-          [
-            {
-              "time": 1,
-              "x": 0.05,
-              "health": 6,
-              "speedX": 20, 
-              "speedY": 50,
-              "key": "greenEnemy",
-              "scale": 3
-            },
-            {
-              "time": 2,
-              "x": 0.1,
-              "health": 3,
-              "speedX": 50, 
-              "speedY": 50,
-              "key": "greenEnemy",
-              "scale": 1
-            },
-            {
-              "time": 3,
-              "x": 0.1,
-              "health": 3,
-              "speedX": 50, 
-              "speedY": 50,
-              "key": "greenEnemy",
-              "scale": 1
-            },
-            {
-              "time": 4,
-              "x": 0.1,
-              "health": 3,
-              "speedX": 50, 
-              "speedY": 50,
-              "key": "greenEnemy",
-              "scale": 1
-            },
-            {
-              "time": 5,
-              "x": 0.1,
-              "health": 3,
-              "speedX": 50, 
-              "speedY": 50,
-              "key": "greenEnemy",
-              "scale": 1
-            },
-            {
-              "time": 6,
-              "x": 0.1,
-              "health": 6,
-              "speedX": 50, 
-              "speedY": 50,
-              "key": "greenEnemy",
-              "scale": 3
-            },
-            {
-              "time": 7,
-              "x": 0.9,
-              "health": 3,
-              "speedX": -50, 
-              "speedY": 50,
-              "key": "redEnemy",
-              "scale": 2
-            },
-            {
-              "time": 8,
-              "x": 0.9,
-              "health": 3,
-              "speedX": -50, 
-              "speedY": 50,
-              "key": "redEnemy",
-              "scale": 1
-            },
-            {
-              "time": 9,
-              "x": 0.9,
-              "health": 3,
-              "speedX": -50, 
-              "speedY": 50,
-              "key": "redEnemy",
-              "scale": 1
-            },
-            {
-              "time": 10,
-              "x": 0.9,
-              "health": 3,
-              "speedX": -50, 
-              "speedY": 50,
-              "key": "redEnemy",
-              "scale": 1
-            },
-            {
-              "time": 11,
-              "x": 0.9,
-              "health": 3,
-              "speedX": -50, 
-              "speedY": 50,
-              "key": "redEnemy",
-              "scale": 1
-            },
-            {
-              "time": 12,
-              "x": 0.9,
-              "health": 6,
-              "speedX": -50, 
-              "speedY": 50,
-              "key": "redEnemy",
-              "scale": 3
-            },
-            {
-              "time": 13,
-              "x": 0.1,
-              "health": 3,
-              "speedX": 100, 
-              "speedY": 20,
-              "key": "greenEnemy",
-              "scale": 1
-            },
-            {
-              "time": 14,
-              "x": 0.1,
-              "health": 3,
-              "speedX": 100, 
-              "speedY": 20,
-              "key": "yellowEnemy",
-              "scale": 1
-            },
-            {
-              "time": 15,
-              "x": 0.1,
-              "health": 3,
-              "speedX": 100, 
-              "speedY": 20,
-              "key": "yellowEnemy",
-              "scale": 1
-            },
-            {
-              "time": 16,
-              "x": 0.1,
-              "health": 3,
-              "speedX": 100, 
-              "speedY": 20,
-              "key": "yellowEnemy",
-              "scale": 1
-            },
-            {
-              "time": 17,
-              "x": 0.1,
-              "health": 3,
-              "speedX": 100, 
-              "speedY": 20,
-              "key": "yellowEnemy",
-              "scale": 1
-            },
-            {
-              "time": 18,
-              "x": 0.1,
-              "health": 12,
-              "speedX": 120, 
-              "speedY": 50,
-              "key": "yellowEnemy",
-              "scale": 5
+        
+        // Parse the level data to use
+        this.levelData = JSON.parse(this.game.cache.getText('level' + this.currentLevel));
+        
+        // end of level timer
+        this.endOfLevelTimer = this.game.time.events.add(this.levelData.duration * 1000, function() {
+            console.log('level ended');
+            
+            if (this.currentLevel < this.numLevels) {
+                this.currentLevel++;    
+            } else {
+                this.currentLevel = 1;
             }
-          ]
-        };
+            
+            this.game.state.start('GameState', true, false, this.currentLevel);
+            
+        }, this)
         
         this.scheduleNextEnemy();
     },
