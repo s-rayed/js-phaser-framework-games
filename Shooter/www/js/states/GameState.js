@@ -41,21 +41,22 @@ Shooter.GameState = {
         this.initBullets();
         this.shootingTimer = this.game.time.events.loop(Phaser.Timer.SECOND / 5, this.createPlayerBullet, this);
         
-        var enemy = new Shooter.Enemy(this.game, 100, 100, 'greenEnemy', 10, []);
-        this.game.add.existing(enemy);
-        
+        // Initiate Enemies
+        this.initEnemies();
     },
     
     update: function() {
+        
+        this.game.physics.arcade.overlap(this.playerBullets, this.enemies, this.damageEnemy, null, this);
         // player speed at init and it also stops from continuous movement with one touch/click
         this.player.body.velocity.x = 0;
-        // event listeners
+        // user event listeners
         if (this.game.input.activePointer.isDown) {
             // This is the x position of the user touch
             var targetX = this.game.input.activePointer.position.x;
             // direction will be 1 if right, -1 if left
             var direction = targetX >= this.game.world.centerX ? 1 : -1;
-            
+            // Moving player
             this.player.body.velocity.x = direction * this.PLAYER_SPEED;
         }
     },
@@ -83,6 +84,22 @@ Shooter.GameState = {
         bullet.body.velocity.y = this.BULLET_SPEED;
         
         
+    },
+    initEnemies: function() {
+        this.enemies = this.add.group();
+        this.enemies.enableBody = true;
+        
+        var enemy = new Shooter.Enemy(this.game, 100, 100, 'greenEnemy', 10, []);
+        this.enemies.add(enemy);
+        
+        enemy.body.velocity.x = 100;
+        enemy.body.velocity.y = 50;
+    },
+    
+    damageEnemy: function(bullet, enemy) {
+        enemy.damage(1);
+        
+        bullet.kill();
     }
     
 };
