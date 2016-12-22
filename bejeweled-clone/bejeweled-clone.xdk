@@ -4,22 +4,14 @@
     "creationData": {
       "projectTypeName": "com.intel.xdk.projecttype.webapp",
       "src": "webapp/template-blank/sample.zip",
-      "projectGuid": "1ea83fd9-f3d3-406a-bff4-ad185077f7fc",
-      "lastModifiedDate": 1482426764995,
-      "creationDate": 1482256845223
+      "projectGuid": "6b022920-4094-4260-bf99-99d9b15092ed",
+      "lastModifiedDate": 1482426763556,
+      "creationDate": 1482426760704
     },
     "XDK-app-designer": "false",
     "sourceDirectory": "www",
     "startFile": "index.html",
-    "projectFiles": {
-      "xdk-publish-meta-data.json": {
-        "settings": {
-          "project": {
-            "XDK-not-deployed": "True"
-          }
-        }
-      }
-    },
+    "projectFiles": {},
     "projectDirectories": {},
     "libraries": [],
     "serviceMethods": [],
@@ -36,14 +28,13 @@
         },
         "isActive_": true,
         "certificateId_": "",
-        "appName_": "Shooter",
+        "appName_": "bejeweled-clone",
         "appID_": "xdk.intel.blank.template",
         "appAccess_": {
-          "mode": "whitelist",
+          "mode": "legacy",
           "network": [],
           "intents": [],
-          "navigation": [],
-          "properties": {}
+          "navigation": []
         },
         "icons_": [],
         "splashes_": [],
@@ -66,14 +57,13 @@
         },
         "isActive_": true,
         "certificateId_": "",
-        "appName_": "Shooter",
+        "appName_": "bejeweled-clone",
         "appID_": "xdk.intel.blank.template",
         "appAccess_": {
-          "mode": "whitelist",
+          "mode": "legacy",
           "network": [],
           "intents": [],
-          "navigation": [],
-          "properties": {}
+          "navigation": []
         },
         "icons_": [],
         "splashes_": [],
@@ -118,7 +108,7 @@
         "preferences_": {},
         "isActive_": true,
         "certificateId_": "",
-        "appName_": "Shooter",
+        "appName_": "bejeweled-clone",
         "appID_": "xdk.intel.blank.template",
         "appAccess_": {
           "mode": "legacy",
@@ -193,7 +183,7 @@
         "preferences_": {},
         "isActive_": true,
         "certificateId_": "",
-        "appName_": "Shooter",
+        "appName_": "bejeweled-clone",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",
@@ -219,7 +209,7 @@
         },
         "isActive_": true,
         "certificateId_": "",
-        "appName_": "Shooter",
+        "appName_": "bejeweled-clone",
         "appID_": "xdk.intel.blank.template.crosswalk",
         "appAccess_": {
           "mode": "legacy",
