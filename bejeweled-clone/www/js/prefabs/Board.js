@@ -26,7 +26,7 @@ Match3.Board = function(state, rows, cols, blockVariations) {
     // Reserve grid on the top, for when new blocks are needed
     this.reserveGrid = [];
 
-    this.RESERVE_ROW = 5;
+    this.RESERVE_ROW = rows;
 
     for (i = 0; i < this.RESERVE_ROW; i++) {
         this.reserveGrid.push([]);
@@ -204,10 +204,49 @@ Match3.Board.prototype.dropReserveBlock = function(sourceRow, targetRow, col) {
     this.reserveGrid[sourceRow][col] = 0;
 };
 
+// Moves down blocks to fill in empty slots
+Match3.Board.prototype.updateGrid = function() {
+    // Climb the grid from the bottom up, when an empty slot is found, climb up in the cloumn until a block is found
+    // Make the block fall and climb up to the reserve grid if it is required
+    var i, j, k, foundBlock;
+
+    // Loop through all the rows, from bottom up
+    for (i = this.rows - 1; i >= 0; i--) {
+        for (j = 0; j < this.cols; j++) {
+            // if block is 0, get first non-zero, then go up to get a non-zero
+            if(this.grid[i][j] === 0) {
+                foundBlock = false;
+
+                // climb up in the main grid
+                for (k = i - 1; k >= 0; k--) {
+                    if (this.grid[k][j] > 0) {
+                        this.dropBlock(k, i, j);
+                        foundBlock = true;
+                        break;
+                    }
+                }
+
+                if (!foundBlock) {
+                    // climb up in the reserve grid (only gets called if numbers are 0 in this iteration)
+                    for (k = this.RESERVE_ROW - 1; k >= 0; k--) {
+                        if (this.reserveGrid[k][j] > 0) {
+                            this.dropReserveBlock(k, i, j);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Repopulate the reserveGrid so that there are no chains in the reserve
+    this.populateReserveGrid();
+};
 
 
 
-// 46:34
+
+
 
 
 
