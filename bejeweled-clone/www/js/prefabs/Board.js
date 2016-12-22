@@ -149,7 +149,7 @@ Match3.Board.prototype.isChained = function(block) {
     }
 
     // center - horizontal
-    if (variation == this.grid[row][col - 1] && variation == this.grid[row][col + 2]) {
+    if (variation == this.grid[row][col - 1] && variation == this.grid[row][col + 1]) {
         isChained = true;
     }
 
@@ -162,6 +162,58 @@ Match3.Board.prototype.isChained = function(block) {
 
     return isChained;
 };
+
+// Find all chains on the board
+Match3.Board.prototype.findAllChains = function() {
+    var chained = [];
+    var i, j;
+
+    for (i = 0; i < this.rows; i++) {
+        for (j = 0; j < this.cols; j++) {
+            if (this.isChained({ row: i, col: j})) {
+                chained.push({ row: i, col: j});
+            }
+        }
+    }
+
+    console.log(chained);
+    return chained;
+};
+
+// Clear all chains
+Match3.Board.prototype.clearChains = function() {
+    // Finds all blocks that need to be cleared
+    var chainedBlocks = this.findAllChains();
+
+    // Sets the chain blocks to 0
+    chainedBlocks.forEach(function(block) {
+        this.grid[block.row][block.col] = 0;
+    }, this);
+};
+
+
+// Drop block in the main grid from one position to another, source is set to 0
+Match3.Board.prototype.dropBlock = function(sourceRow, targetRow, col) {
+    this.grid[targetRow][col] = this.grid[sourceRow][col];
+    this.grid[sourceRow][col] = 0;
+};
+
+// drop a block in the reserve grid from a position to another. the source is set to 0
+Match3.Board.prototype.dropReserveBlock = function(sourceRow, targetRow, col) {
+    this.grid[targetRow][col] = this.reserveGrid[sourceRow][col];
+    this.reserveGrid[sourceRow][col] = 0;
+};
+
+
+
+
+// 46:34
+
+
+
+
+
+
 
 
 
