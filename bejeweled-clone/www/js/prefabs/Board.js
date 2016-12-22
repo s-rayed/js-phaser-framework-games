@@ -70,34 +70,34 @@ Match3.Board.prototype.populateReserveGrid = function() {
     }
 }
 
-Match3.Board.prototype.consoleLog = function() {
+// Match3.Board.prototype.consoleLog = function() {
 
-    var i, j, variation;
-    var prettyString = '';
+//     var i, j, variation;
+//     var prettyString = '';
 
-    for (i = 0; i < this.RESERVE_ROW; i++) {
-        prettyString += '\n';
-        for (j = 0; j < this.cols; j++) {
-            prettyString += ' ' + this.reserveGrid[i][j];    
-        }
-    }
+//     for (i = 0; i < this.RESERVE_ROW; i++) {
+//         prettyString += '\n';
+//         for (j = 0; j < this.cols; j++) {
+//             prettyString += ' ' + this.reserveGrid[i][j];    
+//         }
+//     }
 
-    prettyString += '\n';
+//     prettyString += '\n';
 
-    for (j = 0; j < this.cols; j++) {
-        prettyString += ' -';
-    }
+//     for (j = 0; j < this.cols; j++) {
+//         prettyString += ' -';
+//     }
 
-    for (i = 0; i < this.rows; i++) {
-        prettyString += '\n';
-        for (j = 0; j < this.cols; j++) {
-            prettyString += ' ' + this.grid[i][j]; 
-        }
-    }
+//     for (i = 0; i < this.rows; i++) {
+//         prettyString += '\n';
+//         for (j = 0; j < this.cols; j++) {
+//             prettyString += ' ' + this.grid[i][j]; 
+//         }
+//     }
 
-    console.log(prettyString);
+//     console.log(prettyString);
 
-};
+// };
 
 // Swapping blocks
 
@@ -107,6 +107,13 @@ Match3.Board.prototype.swap = function(source, target) {
 
     this.grid[target.row][target.col] = this.grid[source.row][source.col];
     this.grid[source.row][source.col] = temp;
+
+    var tempPos = { row: source.row, col: source.col };
+    source.row = target.row;
+    source.col = target.col;
+
+    target.row = tempPos.row;
+    target.col = tempPos.col;
 
 };
 
@@ -182,7 +189,7 @@ Match3.Board.prototype.findAllChains = function() {
         }
     }
 
-    console.log(chained);
+    // console.log(chained);
     return chained;
 };
 
