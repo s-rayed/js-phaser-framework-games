@@ -20,6 +20,10 @@ Match3.GameState = {
         this.board.consoleLog();
 
         this.drawBoard();
+
+        var block1 = this.blocks.children[10];
+        var block2 = this.blocks.children[11];
+        this.swapBlocks(block1, block2);
     },
 
     createBlock: function(x, y, data) {
@@ -97,6 +101,36 @@ Match3.GameState = {
         var blockMovement = this.game.add.tween(block);
         blockMovement.to({ y: targetY }, this.ANIMATION_TIME );
         blockMovement.start();
+    },
+
+    swapBlocks: function(block1, block2) {
+        var block1Movement = this.game.add.tween(block1);
+        block1Movement.to ({ x: block2.x, y: block2.y }, this.ANIMATION_TIME);
+        block1Movement.onComplete.add(function() {
+            // After animation we update the model
+            this.board.swap(block1, block2);
+
+            if (!this.isReversingSwap) {
+
+                var chains = this.board.findAllChains();
+                if (chains.length > 0) {
+                    this.board.clearChains();
+                    this.board.updateGrid();
+                } else {
+                    this.isReversingSwap = true;
+                    this.swapBlocks(block1, block2);
+                }
+
+            } else {
+                this.isReversingSwap = false;
+            }
+
+        }, this)
+        block1Movement.start();
+
+        var block2Movement = this.game.add.tween(block2);
+        block2Movement.to ({ x: block1.x, y: block1.y }, this.ANIMATION_TIME);
+        block2Movement.start();
     }
     
 };
