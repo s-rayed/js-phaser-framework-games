@@ -9,7 +9,7 @@ Match3.PreloadState = {
         this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'bar');
         this.preloadBar.anchor.setTo(0.5);
         this.preloadBar.scale.setTo(100, 1);
-        this.load.setPreloadSrite(this.preloadBar);
+        this.load.setPreloadSprite(this.preloadBar);
         
         // Load game assets
         this.load.image('block1', 'assets/images/gem_blue.png');
@@ -25,7 +25,7 @@ Match3.PreloadState = {
     },
     
     create: function() {
-        
+        this.state.start('Game');
     }
     
 };
