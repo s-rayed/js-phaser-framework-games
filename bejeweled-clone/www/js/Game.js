@@ -74,6 +74,29 @@ Match3.GameState = {
         }, this);
 
         return foundBlock;
+    },
+
+    dropBlock: function(sourceRow, targetRow, col) {
+        var block = this.getBlockFromColRow({ row: sourceRow, col: col });
+        var targetY = 150 + targetRow * (this.BLOCK_SIZE + 6);
+
+        block.row = targetRow;
+
+        var blockMovement = this.game.add.tween(block);
+        blockMovement.to({ y: targetY }, this.ANIMATION_TIME );
+        blockMovement.start();
+    },
+
+    dropReserveBlock: function(sourceRow, targetRow, col) {
+        var x = 36 + col * (this.BLOCK_SIZE + 6);
+        var y = -(this.BLOCK_SIZE + 6) * this.board.RESERVE_ROW + sourceRow * (this.BLOCK_SIZE + 6);
+
+        var block = this.createBlock(x, y, { asset: 'block' + this.board.grid[targetRow][col], row: targetRow, col: col });
+        var targetY = 150 + targetRow * (this.BLOCK_SIZE + 6);
+
+        var blockMovement = this.game.add.tween(block);
+        blockMovement.to({ y: targetY }, this.ANIMATION_TIME );
+        blockMovement.start();
     }
     
 };
