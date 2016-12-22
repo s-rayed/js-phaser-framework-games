@@ -91,7 +91,7 @@ Match3.Board.prototype.consoleLog = function() {
 
     console.log(prettyString);
 
-}
+};
 
 // Swapping blocks
 
@@ -102,7 +102,7 @@ Match3.Board.prototype.swap = function(source, target) {
     this.grid[target.row][target.col] = this.grid[source.row][source.col];
     this.grid[source.row][source.col] = temp;
 
-}
+};
 
 // Check if 2 blocks that are going to be swapped are adjacent to each other
 
@@ -112,10 +112,56 @@ Match3.Board.prototype.checkAdjacent = function(source, target) {
 
     var isAdjacent = (diffRow === 1 && diffCol === 0) || (diffRow === 0 && diffCol === 1)
     return isAdjacent;
-}
+};
 
 
+// Check whether a single block is a part of a chain
 
+Match3.Board.prototype.isChained = function(block) {
+    // There are 6 possible chains we have to check all the time, whether there is a chain above, below, to the left, to the right, horizontally centered, vertically centered.
+    var isChained = false;
+    var variation = this.grid[block.row][block.col];
+    var row = block.row;
+    var col = block.col;
+
+    // Left
+    if (variation == this.grid[row][col - 1] && variation == this.grid[row][col - 2]) {
+        isChained = true;
+    }
+
+    // Right
+    if (variation == this.grid[row][col + 1] && variation == this.grid[row][col + 2]) {
+        isChained = true;
+    }
+
+    // Up
+    if (this.grid[row - 2]) {
+        if (variation == this.grid[row - 1][col] && variation == this.grid[row - 2][col]) {
+            isChained = true;
+        }        
+    }
+
+    // Down
+    if (this.grid[row + 2]) {
+        if (variation == this.grid[row + 1][col] && variation == this.grid[row + 2][col]) {
+            isChained = true;
+        }        
+    }
+
+    // center - horizontal
+    if (variation == this.grid[row][col - 1] && variation == this.grid[row][col + 2]) {
+        isChained = true;
+    }
+
+    // center - vertical
+    if (this.grid[row + 1] && this.grid[row - 1]) {
+        if (variation == this.grid[row + 1][col] && variation == this.grid[row - 1][col]) {
+            isChained = true;
+        }        
+    }
+
+    return isChained;
+};
 
 
 
