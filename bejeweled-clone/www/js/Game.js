@@ -135,6 +135,7 @@ Match3.GameState = {
 
     pickBlock: function(block) {
         // Only swap if UI is not blocked
+//        console.log(block)
         if (this.isBoardBlocked) {
             return;
         }
@@ -157,6 +158,7 @@ Match3.GameState = {
                 //swap blocks
                 this.swapBlocks(this.selectedBlock, this.targetBlock);
             } else {
+//                console.log('not adjacent');
                 this.clearSelection();
             }
         }
