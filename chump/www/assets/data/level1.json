@@ -1,0 +1,88 @@
+{
+    "duration": 20,
+    "enemies": 
+    [
+        {
+            "time": 1,
+            "y": 0.07,
+            "key": "enemy",
+            "speedX": 2
+        },
+        {
+            "time": 1,
+            "y": 0.5,
+            "key": "enemy",
+            "speedX": 2
+        },
+        {
+            "time": 1,
+            "y": 0.85,
+            "key": "enemy",
+            "speedX": 2
+        },
+        {
+            "time": 5,
+            "y": 0.07,
+            "key": "enemy",
+            "speedX": 2
+        },
+        {
+            "time": 5,
+            "y": 0.5,
+            "key": "enemy",
+            "speedX": 2
+        },
+        {
+            "time": 5,
+            "y": 0.85,
+            "key": "enemy",
+            "speedX": 2
+        },
+        {
+            "time": 5,
+            "y": 0.18,
+            "key": "enemy",
+            "speedX": 2
+        },
+        {
+            "time": 5,
+            "y": 0.7,
+            "key": "enemy",
+            "speedX": 2
+        },
+        {
+            "time": 5,
+            "y": 0.61,
+            "key": "enemy",
+            "speedX": 2
+        },
+        {
+            "time": 10,
+            "y": 0.77,
+            "key": "enemy",
+            "speedX": 2
+        },
+        {
+            "time": 15,
+            "y": 0.25,
+            "key": "enemy",
+            "speedX": 2
+        },
+        {
+            "time": 15,
+            "y": 0.6,
+            "key": "enemy",
+            "speedX": 2
+        }
+    ],
+    "powerUps":
+    [
+        {
+            "time": 8,
+            "y": 0.5,
+            "key": "powerFood",
+            "speedX": 2,
+            "scale": 2
+        }
+    ]
+}
