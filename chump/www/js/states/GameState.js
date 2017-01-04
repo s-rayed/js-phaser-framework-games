@@ -19,7 +19,7 @@ Chump.GameState = {
         this.background.inputEnabled = true;
         this.background.events.onInputDown.add(this.placeFood, this);
         
-        this.player = this.game.add.sprite(65, 320, 'player');
+        this.player = this.game.add.sprite(65, this.game.world.height * 0.45, 'player');
         this.player.anchor.setTo(0.5);
         this.player.scale.setTo(0.5, 0.5);
         
@@ -49,7 +49,154 @@ Chump.GameState = {
         this.player.animations.play('flying');
 
         this.uiBlocked = false;
+
+        var graphicStyle = {
+            font: '10px Arial',
+            fill: '#fff'
+        };
         
+        var graphics0 = this.game.add.graphics(0, 0);
+//        graphics0.beginFill(0xFF3300);
+        graphics0.lineStyle(3, 0xffd900);
+        graphics0.lineTo(this.game.world.width, 0);
+        var graphics0text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0, '0%', graphicStyle);
+        graphics0text.fixedToCamera = true;
+
+        var graphics5 = this.game.add.graphics(0, this.game.world.height * 0.05);
+//        graphics5.beginFill(0xFF3300);
+        graphics5.lineStyle(3, 0xffd900);
+        graphics5.lineTo(this.game.world.width, 0);
+        var graphics5text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.05, '5%', graphicStyle);
+        graphics5text.fixedToCamera = true;
+
+        var graphics10 = this.game.add.graphics(0, this.game.world.height * 0.1);
+//        graphics10.beginFill(0xFF3300);
+        graphics10.lineStyle(3, 0xffd900);
+        graphics10.lineTo(this.game.world.width, 0);
+        var graphics10text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.1, '10%', graphicStyle);
+        graphics10text.fixedToCamera = true;
+
+        var graphics15 = this.game.add.graphics(0, this.game.world.height * 0.15);
+//        graphics15.beginFill(0xFF3300);
+        graphics15.lineStyle(3, 0xffd900);
+        graphics15.lineTo(this.game.world.width, 0);
+        var graphics15text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.15, '15%', graphicStyle);
+        graphics15text.fixedToCamera = true;
+
+        var graphics20 = this.game.add.graphics(0, this.game.world.height * 0.2);
+//        graphics20.beginFill(0xFF3300);
+        graphics20.lineStyle(3, 0xffd900);
+        graphics20.lineTo(this.game.world.width, 0);
+        var graphics20text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.2, '20%', graphicStyle);
+        graphics20text.fixedToCamera = true;
+
+        var graphics25 = this.game.add.graphics(0, this.game.world.height * 0.25);
+//        graphics25.beginFill(0xFF3300);
+        graphics25.lineStyle(3, 0xffd900);
+        graphics25.lineTo(this.game.world.width, 0);
+        var graphics25text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.25, '25%', graphicStyle);
+        graphics25text.fixedToCamera = true;
+
+        var graphics30 = this.game.add.graphics(0, this.game.world.height * 0.3);
+//        graphics30.beginFill(0xFF3300);
+        graphics30.lineStyle(3, 0xffd900);
+        graphics30.lineTo(this.game.world.width, 0);
+        var graphics30text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.3, '30%', graphicStyle);
+        graphics30text.fixedToCamera = true;
+
+        var graphics35 = this.game.add.graphics(0, this.game.world.height * 0.35);
+//        graphics35.beginFill(0xFF3300);
+        graphics35.lineStyle(3, 0xffd900);
+        graphics35.lineTo(this.game.world.width, 0);
+        var graphics35text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.35, '35%', graphicStyle);
+        graphics35text.fixedToCamera = true;
+
+        var graphics40 = this.game.add.graphics(0, this.game.world.height * 0.4);
+//        graphics40.beginFill(0xFF3300);
+        graphics40.lineStyle(3, 0xffd900);
+        graphics40.lineTo(this.game.world.width, 0);
+        var graphics40text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.4, '40%', graphicStyle);
+        graphics40text.fixedToCamera = true;
+
+        var graphics45 = this.game.add.graphics(0, this.game.world.height * 0.45);
+//        graphics45.beginFill(0xFF3300);
+        graphics45.lineStyle(3, 0xffd900);
+        graphics45.lineTo(this.game.world.width, 0);
+        var graphics45text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.45, '45%', graphicStyle);
+        graphics45text.fixedToCamera = true;
+
+        var graphics50 = this.game.add.graphics(0, this.game.world.height * 0.5);
+//        graphics50.beginFill(0xFF3300);
+        graphics50.lineStyle(3, 0xffd900);
+        graphics50.lineTo(this.game.world.width, 0);
+        var graphics50text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.5, '50%', graphicStyle);
+        graphics50text.fixedToCamera = true;
+
+        var graphics55 = this.game.add.graphics(0, this.game.world.height * 0.55);
+//        graphics55.beginFill(0xFF3300);
+        graphics55.lineStyle(3, 0xffd900);
+        graphics55.lineTo(this.game.world.width, 0);
+        var graphics55text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.55, '55%', graphicStyle);
+        graphics55text.fixedToCamera = true;
+
+        var graphics60 = this.game.add.graphics(0, this.game.world.height * 0.6);
+//        graphics60.beginFill(0xFF3300);
+        graphics60.lineStyle(3, 0xffd900);
+        graphics60.lineTo(this.game.world.width, 0);
+        var graphics60text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.6, '60%', graphicStyle);
+        graphics60text.fixedToCamera = true;
+
+        var graphics65 = this.game.add.graphics(0, this.game.world.height * 0.65);
+//        graphics65.beginFill(0xFF3300);
+        graphics65.lineStyle(3, 0xffd900);
+        graphics65.lineTo(this.game.world.width, 0);
+        var graphics65text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.65, '65%', graphicStyle);
+        graphics65text.fixedToCamera = true;
+
+        var graphics70 = this.game.add.graphics(0, this.game.world.height * 0.7);
+//        graphics70.beginFill(0xFF3300);
+        graphics70.lineStyle(3, 0xffd900);
+        graphics70.lineTo(this.game.world.width, 0);
+        var graphics70text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.7, '70%', graphicStyle);
+        graphics70text.fixedToCamera = true;
+
+        var graphics75 = this.game.add.graphics(0, this.game.world.height * 0.75);
+//        graphics75.beginFill(0xFF3300);
+        graphics75.lineStyle(3, 0xffd900);
+        graphics75.lineTo(this.game.world.width, 0);
+        var graphics75text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.75, '75%', graphicStyle);
+        graphics75text.fixedToCamera = true;
+
+        var graphics80 = this.game.add.graphics(0, this.game.world.height * 0.8);
+//        graphics80.beginFill(0xFF3300);
+        graphics80.lineStyle(3, 0xffd900);
+        graphics80.lineTo(this.game.world.width, 0);
+        var graphics80text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.8, '80%', graphicStyle);
+        graphics80text.fixedToCamera = true;
+
+        var graphics85 = this.game.add.graphics(0, this.game.world.height * 0.85);
+//        graphics85.beginFill(0xFF3300);
+        graphics85.lineStyle(3, 0xffd900);
+        graphics85.lineTo(this.game.world.width, 0);
+        var graphics85text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.85, '85%', graphicStyle);
+        graphics85text.fixedToCamera = true;
+
+        var graphics90 = this.game.add.graphics(0, this.game.world.height * 0.9);
+//        graphics90.beginFill(0xFF3300);
+        graphics90.lineStyle(3, 0xffd900);
+        graphics90.lineTo(this.game.world.width, 0);
+        var graphics90text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.9, '90%', graphicStyle);
+        graphics90text.fixedToCamera = true;
+
+        var graphics95 = this.game.add.graphics(0, this.game.world.height * 0.95);
+//        graphics95.beginFill(0xFF3300);
+        graphics95.lineStyle(3, 0xffd900);
+        graphics95.lineTo(this.game.world.width, 0);
+        var graphics95text = this.game.add.text(this.game.world.width * 0.5, this.game.world.height * 0.95, '95%', graphicStyle);
+        graphics95text.fixedToCamera = true;
+
+
+
         this.initFood();
         this.initEnemies();
         this.initPowerUps();
@@ -282,6 +429,7 @@ Chump.GameState = {
             
             this.nextEnemyTimer = this.game.time.events.add(nextTime, function() {
                 this.createEnemy(320, nextEnemy.y * this.game.world.height, nextEnemy.key, nextEnemy.speedX);
+                console.log('enemyY', nextEnemy.y)
                 this.currentEnemyIndex++;
                 this.scheduleNextEnemy();
             }, this);
